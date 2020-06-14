@@ -59,6 +59,7 @@ class TasksController extends Controller
         $task = new Task;
         $task->status = $request->status;
         $task->content = $request->content;
+        $task->user_id = $request->user()->id;
         $task->save();
         
         //トップページへリダイレクトさせる
@@ -142,8 +143,5 @@ class TasksController extends Controller
         return redirect('/');
     }
     
-// public function __construct()
-// {
-//     $this->middleware('auth');
-// }
+
 }
