@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    
+   
 
     /**
      * The attributes that are mass assignable.
@@ -37,11 +39,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    //このユーザが所有する投稿。(Taskモデルとの関係を定義)
-    // // public function tasks()
-    // // {
-    // //     return $this->hasMany(Task::class);
-    // }
+    //このユーザが所有するタスク。(Taskモデルとの関係を定義)
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+    
+    /**
+     * このユーザに関係するモデルの件数をロードする。
+     */
+    public function loadRelationshipCounts()
+    {
+        $this->loadCount('tasks');
+    }
     
     
 }
