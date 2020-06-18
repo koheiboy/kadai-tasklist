@@ -84,13 +84,19 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        
         //idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
         
+        //認証済みユーザ（閲覧者）がそのタスクの所有者であれば、タスク詳細を表示
+        if(\Auth::id() === $task->user_id){
         // タスク詳細ビューでそれを表示
         return view('tasks.show',[
             'task' => $task,
             ]);
+        }else{
+            return redirect('/');
+        }
     }
 
     /**
